@@ -4,22 +4,10 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
 const { Pool } = require("pg");
-let params = {};
-if (process.env.DATABASE_URL) {
-  params.connectionString = process.env.DATABASE_URL;
-} else {
-  params = {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-  };
-}
-
+const { params } = require("./db/config");
 const db = new Pool(params);
 db.connect();
 
@@ -32,17 +20,9 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(helmet());
 
-// endpoints
-app.get("/ping", (_req, res) => {
-  const q = `SELECT * FROM ?`;
-  db.query(q)
-    .then((data) => {
-      return res.json(data.rows);
-    })
-    .catch((e) => {
-      res.send(e.message);
-    });
-});
+const messages = require("./routes/messages");
+/* --------------------------------- ROUTES --------------------------------- */
+app.use("/api/messages", messages(db));
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
