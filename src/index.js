@@ -20,6 +20,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(helmet());
 
+/* --------------------------------- ROUTES --------------------------------- */
 const messages = require("./routes/messages");
 /* --------------------------------- ROUTES --------------------------------- */
 app.use("/api/messages", messages(db));
