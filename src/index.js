@@ -1,7 +1,7 @@
-import express from "express";
-import morgan from "morgan";
-import helmet from "helmet";
-import cors from "cors";
+const express = require("express");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 
 // const ENV = process.env.NODE_ENV || 'developement'
@@ -16,9 +16,7 @@ app.use(helmet());
 
 // endpoints
 app.get("/ping", (_req, res) => {
-  return res.send({
-    status: "OK",
-  });
+  return res.send("<h1>PONG!</h1>");
 });
 
 app.listen(PORT, () => {
