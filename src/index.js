@@ -34,7 +34,7 @@ app.use(helmet());
 
 // endpoints
 app.get("/ping", (_req, res) => {
-  const q = `SELECT * FROM messages`;
+  const q = `SELECT * FROM ?`;
   db.query(q)
     .then((data) => {
       return res.json(data.rows);
