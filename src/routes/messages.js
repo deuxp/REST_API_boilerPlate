@@ -16,12 +16,13 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const { messages } = req.body;
+    console.log(messages)
     const Q = `INSERT INTO messages (body) 
     VALUES ('${messages}');`;
 
     db.query(Q)
       .then((response) => {
-        res.status(201).send("OK!");
+        res.status(204);
       })
       .catch((e) => {
         res.send(e.message);
